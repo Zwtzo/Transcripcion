@@ -38,13 +38,13 @@ cd Transcripci-n
 ### 2. Configura el Entorno de Python
 Crea y activa un entorno virtual para aislar las dependencias.
 
-# Crear el entorno virtual
+#### Crear el entorno virtual
 python -m venv venv
 
-# Activar en Windows
+#### Activar en Windows
 venv\Scripts\activate
 
-# Activar en macOS/Linux
+#### Activar en macOS/Linux
 source venv/bin/activate
 ###  3. Instala las Dependencias
 Instala las librerías de Python necesarias.
@@ -66,19 +66,19 @@ Descomprime el archivo descargado y mueve su contenido a la carpeta model. La es
 |-- ... (resto de carpetas del proyecto)
 
 ### Cómo Ejecutar la Aplicación
-# Ejecución Local
+#### Ejecución Local
 Con el entorno virtual activado, inicia el servidor desde la raíz del proyecto:
 uvicorn app.main:app --reload
 El servidor estará disponible en http://127.0.0.1:8000.
 
-# Ejecución con Docker
+#### Ejecución con Docker
 Si tienes Docker instalado y corriendo, puedes usar los siguientes comandos.
 
 docker build -t transcription-api .
 docker run -p 8000:8000 transcription-api
 El servidor estará disponible en http://localhost:8000.
 
-# Ejemplos de Uso
+#### Ejemplos de Uso
 Asegúrate de que el servidor (local o en Docker) esté corriendo.
 Endpoint REST (/transcribe)
 Usa curl en una terminal para subir un archivo de audio y recibir la transcripción completa.
@@ -88,7 +88,7 @@ JSON
 {"text":"café con pan"}
 Endpoint WebSocket (/ws/transcribe)
 
-# transcipcion tiempo real
+#### transcipcion tiempo real
 Para probar la transcripción en tiempo real, puedes usar el script client_test.py.
 Prepara el audio: El cliente WebSocket necesita enviar el audio en formato PCM. Puedes convertir un archivo .wav usando FFmpeg:
 ffmpeg -i samples/1.wav -f s16le -ar 16000 -ac 1 samples/1.pcm
@@ -97,7 +97,7 @@ python client_test.py
 
 La terminal del cliente mostrará los mensajes de transcripción partial y final enviados por el servidor.
 
-# Cómo Correr los Tests
+#### Cómo Correr los Tests
 Para verificar que toda la API funciona correctamente, ejecuta las pruebas automatizadas con pytest.
 pytest
 El comando ejecutará todas las pruebas definidas en la carpeta tests/ y mostrará un resumen de los resultados.
