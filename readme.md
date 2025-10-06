@@ -4,7 +4,7 @@ Este proyecto es una API en Python construida con **FastAPI** que transcribe aud
 
 El proyecto está diseñado para ser modular, fácil de desplegar y está completamente containerizado con Docker.
 
-## ✨ Características
+## Características
 
 -   **Transcripción en Tiempo Real (WebSocket)**: Envía un stream de audio y recibe transcripciones parciales y finales al instante.
 -   **Transcripción de Archivos (REST API)**: Sube un archivo de audio completo (`.wav`, `.mp3`, etc.) y obtén la transcripción completa.
@@ -15,7 +15,7 @@ El proyecto está diseñado para ser modular, fácil de desplegar y está comple
 
 ---
 
-## 🚀 Requisitos Previos
+## Requisitos Previos
 
 Para ejecutar este proyecto localmente, necesitarás:
 
@@ -25,15 +25,16 @@ Para ejecutar este proyecto localmente, necesitarás:
 
 ---
 
-## 🔧 Instalación y Configuración Local
+## Instalación y Configuración Local
 
 Sigue estos pasos para poner en marcha el proyecto en tu máquina.
 
 ### 1. Clona el Repositorio
-
+```bash
 
 git clone https://github.com/Zwtzo/Transcripci-n
 cd Transcripci-n
+```
 
 ### 2. Configura el Entorno de Python
 Crea y activa un entorno virtual para aislar las dependencias.
