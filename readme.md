@@ -77,23 +77,28 @@ Descomprime el archivo descargado y mueve su contenido a la carpeta model. La es
 Con el entorno virtual activado, inicia el servidor desde la raíz del proyecto:
 ```bash
 uvicorn app.main:app --reload
-El servidor estará disponible en http://127.0.0.1:8000.
 ```
+El servidor estará disponible en http://127.0.0.1:8000.
+
 #### Ejecución con Docker
 Si tienes Docker instalado y corriendo, puedes usar los siguientes comandos.
 ```bash
 docker build -t transcription-api .
-docker run -p 8000:8000 transcription-api
-El servidor estará disponible en http://localhost:8000.
 ```
+```bash
+docker run -p 8000:8000 transcription-api
+```
+El servidor estará disponible en http://localhost:8000.
+
 #### Ejemplos de Uso
 Asegúrate de que el servidor (local o en Docker) esté corriendo.
 Endpoint REST (/transcribe)
 Usa curl en una terminal para subir un archivo de audio y recibir la transcripción completa.
 ```bash
 curl -X POST "http://localhost:8000/transcribe" -F "file=@samples/1.wav"
+```
 Respuesta esperada:
-JSON
+```bash
 {"text":"café con pan"}
 Endpoint WebSocket (/ws/transcribe)
 ```
