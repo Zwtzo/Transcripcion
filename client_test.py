@@ -17,7 +17,7 @@ async def run_test():
         print("Handshake enviado.")
 
         # 2. Enviar el archivo de audio en chunks
-        with open("samples/1.pcm", "rb") as pcm_file:
+        with open("samples/3.pcm", "rb") as pcm_file:
             while True:
                 audio_chunk = pcm_file.read(4000) # Un chunk de 4000 bytes
                 if not audio_chunk:
