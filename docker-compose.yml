@@ -1,0 +1,27 @@
+# Especifica la versión de la sintaxis de Docker Compose que estamos usando.
+version: '3.8'
+
+# 'services' es donde definimos todos los contenedores que forman nuestra aplicación.
+services:
+  # Nombramos a nuestro único servicio 'app'. Podría llamarse como quisiéramos.
+  app:
+    # 'build: .' le dice a Compose: "Construye la imagen para este servicio
+    # usando el Dockerfile que se encuentra en este mismo directorio".
+    build: .
+    
+    # 'ports' conecta un puerto de tu computadora con un puerto del contenedor.
+    # Formato: "PUERTO_EN_TU_PC:PUERTO_EN_EL_CONTENEDOR"
+    ports:
+      - "8000:8000"
+      
+    # 'volumes' Sincroniza una carpeta de la PC con una carpeta dentro del contenedor.
+    volumes:
+      # Sincroniza tu carpeta local './app' con la carpeta '/app' del contenedor.
+      # Si cambias algo en el código, se actualiza al instante dentro del contenedor.
+      - ./app:/app
+      
+      # Sincroniza tu carpeta local './model' con '/app/model' en el contenedor.
+      # Así, el modelo de Vosk no necesita estar copiado DENTRO de la imagen,
+      # lo que la hace más ligera y flexible.
+      - ./model:/app/model
+
