@@ -1,7 +1,7 @@
 # 1. Imagen base: Empezamos con una imagen oficial de Python 3.9 ligera.
 FROM python:3.9-slim
 
-# 2. Instalar ffmpeg: Actualizamos los paquetes e instalamos ffmpeg.
+# 2. Instalar ffmpeg: ACtaulizar paquetes e instalamos ffmpeg.
 RUN apt-get update && apt-get install -y ffmpeg
 
 # 3. Directorio de trabajo: Creamos una carpeta /code dentro del contenedor

@@ -32,8 +32,8 @@ Sigue estos pasos para poner en marcha el proyecto en tu máquina.
 ### 1. Clona el Repositorio
 ```bash
 
-git clone https://github.com/Zwtzo/Transcripci-n
-cd Transcripci-n
+git clone https://github.com/Zwtzo/Transcripcion
+cd Transcripcion
 ```
 
 ### 2. Configura el Entorno de Python
@@ -59,6 +59,7 @@ pip install -r requirements.txt
 La aplicación requiere un modelo de Vosk para funcionar.
 
 Descarga un modelo desde la página oficial de modelos de Vosk. Se recomienda un modelo pequeño para empezar, como vosk-model-small-es-0.42 para español.
+[vosk-model-small-es-0.42.zip](https://alphacephei.com/vosk/models/vosk-model-small-es-0.42.zip)
 
 Crea una carpeta llamada model en la raíz del proyecto.
 
@@ -90,6 +91,12 @@ docker run -p 8000:8000 transcription-api
 ```
 El servidor estará disponible en http://localhost:8000.
 
+#### Ejecución con Docker compose
+Si deseas iniciar todos los servicios definidos en el archivo docker-compose.yml, utiliza este comando desde la raíz del proyecto:
+```bash
+docker-compose up
+```
+
 #### Ejemplos de Uso
 Asegúrate de que el servidor (local o en Docker) esté corriendo.
 Endpoint REST (/transcribe)
@@ -108,13 +115,28 @@ Prepara el audio: El cliente WebSocket necesita enviar el audio en formato PCM. 
 ```bash
 ffmpeg -i samples/1.wav -f s16le -ar 16000 -ac 1 samples/1.pcm
 ```
+
+Cambia la siguiente linea por el sample que utilizaras:
+```bash
+        with open("samples/1.pcm", "rb") as pcm_file:
+```
 Ejecuta el cliente de Python:
 ```bash
 python client_test.py
 ```
 La terminal del cliente mostrará los mensajes de transcripción partial y final enviados por el servidor.
+Ejecuta el ejemplo de error de conexión 
+```bash
+python error_client_test.py 
+```
+Ejecuta el ejemplo de cierre de conexión
+```bash
+python abrupt_close_client.py
+```
 
 #### Cómo Correr los Tests
 Para verificar que toda la API funciona correctamente, ejecuta las pruebas automatizadas con pytest.
+```bash
 pytest
+```
 El comando ejecutará todas las pruebas definidas en la carpeta tests/ y mostrará un resumen de los resultados.

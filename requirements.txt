@@ -1,2 +1,6 @@
-fastapi[all]
+fastapi
+uvicorn[standard]
+python-multipart
 vosk
+pytest
+websockets
