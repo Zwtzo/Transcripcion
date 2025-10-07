@@ -22,7 +22,8 @@ async def run_error_test():
             # Aquí, enviamos intencionalmente "type": "peticion_incorrecta" para forzar un error.
             await websocket.send(json.dumps({
                 "type": "peticion_incorrecta",
-                "sample_rate": 16000
+                "sample_rate": 16000,
+                "channels": 1
             }))
             print("Handshake inválido enviado.")
 
