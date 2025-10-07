@@ -90,6 +90,8 @@ async def websocket_endpoint(websocket: WebSocket):
     # Aceptamos la conexión WebSocket entrante.
     await websocket.accept()
     recognizer = None
+    SUPPORTED_SAMPLE_RATES = [16000] 
+
     try:
         # 1. ESPERAR HANDSHAKE DE INICIO
         # Esperamos el primer mensaje (debe ser JSON) con la configuración inicial (ej. sample_rate).
@@ -115,6 +117,13 @@ async def websocket_endpoint(websocket: WebSocket):
             return
         # ----------------------------------------
         sample_rate = handshake.get("sample_rate", 16000)
+        if sample_rate not in SUPPORTED_SAMPLE_RATES:
+            await websocket.send_json({
+                "type": "error",
+                "message": f"Unsupported sample rate. Supported rates are: {SUPPORTED_SAMPLE_RATES}"
+            })
+            await websocket.close(code=1008)
+            return
         # Inicializamos el reconocedor de Vosk para esta conexión específica.
         recognizer = services.KaldiRecognizer(services.VOSK_MODEL, sample_rate)
 
