@@ -106,7 +106,14 @@ async def websocket_endpoint(websocket: WebSocket):
             await websocket.close(code=1008)
             return
         # ----------------------------------------
-        
+        if handshake.get("channels") != 1:
+            await websocket.send_json({
+                "type": "error",
+                "message": "Invalid audio format. Only 1 channel (mono) is supported."
+            })
+            await websocket.close(code=1008)
+            return
+        # ----------------------------------------
         sample_rate = handshake.get("sample_rate", 16000)
         # Inicializamos el reconocedor de Vosk para esta conexión específica.
         recognizer = services.KaldiRecognizer(services.VOSK_MODEL, sample_rate)
