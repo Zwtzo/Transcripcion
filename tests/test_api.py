@@ -38,7 +38,7 @@ def test_websocket_transcribe_simple():
         # 1. Establecemos la conexión WebSocket con el endpoint '/ws/transcribe'.
         with client.websocket_connect("/ws/transcribe") as websocket:
             # Enviamos el mensaje inicial al servidor con la configuración de audio.
-            websocket.send_json({"type": "start", "sample_rate": 16000})
+            websocket.send_json({"type": "start", "sample_rate": 16000, "channels": 1})
             print("\n[WebSocket Test] Handshake enviado.")
 
             # Abrimos el archivo de audio PCM (formato raw que requiere Vosk).
