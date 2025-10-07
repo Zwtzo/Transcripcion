@@ -174,7 +174,3 @@ async def websocket_endpoint(websocket: WebSocket):
             })
         except Exception:
             pass
-    finally:
-        # 3. CIERRE
-        # Aseguramos que la conexión se cierre al finalizar (tanto si hay éxito como error).
-        await websocket.close()

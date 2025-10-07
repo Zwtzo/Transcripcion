@@ -66,6 +66,7 @@ def test_websocket_transcribe_simple():
                     # Si el mensaje es el 'final' y contiene la palabra clave, marcamos como exitoso.
                     if data["type"] == "final" and "café" in data["text"]:
                         received_final = True
+                        break
                 except Exception:
                     # Cuando el servidor termina el proceso y cierra la conexión, salimos del bucle.
                     break
