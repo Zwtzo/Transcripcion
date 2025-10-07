@@ -23,5 +23,5 @@ services:
       # Sincroniza tu carpeta local './model' con '/app/model' en el contenedor.
       # Así, el modelo de Vosk no necesita estar copiado DENTRO de la imagen,
       # lo que la hace más ligera y flexible.
-      - ./model:/app/model
+      -  ./model:/app/model
 
