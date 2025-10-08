@@ -133,6 +133,10 @@ Ejecuta el ejemplo de cierre de conexión
 ```bash
 python abrupt_close_client.py
 ```
+Ejecuta el ejemplo de enviar audio en un solo chunk
+```bash
+python final_client.py
+```
 
 #### Cómo Correr los Tests
 Para verificar que toda la API funciona correctamente, ejecuta las pruebas automatizadas con pytest.
