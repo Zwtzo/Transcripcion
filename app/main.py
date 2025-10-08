@@ -129,12 +129,15 @@ async def websocket_endpoint(websocket: WebSocket):
 
         # 2. BUCLE PRINCIPAL DE RECEPCIÓN DE DATOS (Stream)
         while True:
-            # Esperamos recibir un mensaje del cliente (puede ser bytes de audio o texto JSON).
-            message = await websocket.receive()
-            
-            if "bytes" in message:
+            # Esperamos recibir un mensaje del cliente.
+            data = await websocket.receive()
+
+            # La forma más confiable: verificamos el TIPO de dato recibido.
+            # Primero, verificamos si el mensaje contiene audio en bytes.
+            if 'bytes' in data and isinstance(data['bytes'], bytes):
+                audio_chunk = data['bytes']
                 # Si es audio (bytes), lo enviamos al reconocedor de Vosk.
-                if recognizer.AcceptWaveform(message["bytes"]):
+                if recognizer.AcceptWaveform(audio_chunk):
                     # Si Vosk reconoce una frase completa, enviamos el resultado 'final'.
                     result = json.loads(recognizer.Result())
                     await websocket.send_json({"type": "final", "text": result.get("text", "")})
@@ -143,14 +146,19 @@ async def websocket_endpoint(websocket: WebSocket):
                     partial_result = json.loads(recognizer.PartialResult())
                     await websocket.send_json({"type": "partial", "text": partial_result.get("partial", "")})
             
-            elif "text" in message:
-                # Si es un mensaje de texto (JSON).
-                data = json.loads(message["text"])
-                if data.get("type") == "eof":
-                    # Si el cliente envía 'eof' (End Of File), forzamos el último resultado final de Vosk.
-                    final_result = json.loads(recognizer.FinalResult())
-                    await websocket.send_json({"type": "final", "text": final_result.get("text", "")})
-                    break # Salimos del bucle para cerrar la conexión.
+            # Si no es audio, verificamos si es un mensaje de texto.
+            elif 'text' in data and isinstance(data['text'], str):
+                text_payload = data['text']
+                try:
+                    # Si es un mensaje de texto (JSON).
+                    message_data = json.loads(text_payload)
+                    if message_data.get("type") == "eof":
+                        # Si el cliente envía 'eof', forzamos el último resultado final de Vosk.
+                        final_result = json.loads(recognizer.FinalResult())
+                        await websocket.send_json({"type": "final", "text": final_result.get("text", "")})
+                        break # Salimos del bucle para cerrar la conexión.
+                except json.JSONDecodeError:
+                    print(f"Received non-JSON text message: {text_payload}")
 
     except WebSocketDisconnect:
         # Manejo de la desconexión normal o abrupta por parte del cliente.
@@ -174,3 +182,8 @@ async def websocket_endpoint(websocket: WebSocket):
             })
         except Exception:
             pass
+    finally:
+            # Aseguramos que la conexión se cierre al finalizar
+            print("Cerrando la conexión desde el servidor.")
+            await websocket.close()
+
